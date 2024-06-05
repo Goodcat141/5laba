@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 canvas shadow</title> 
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = "blue";
+        
+        for (var i = 1; i <= 10; i++) {
+            
+            var alpha = i * 0.1;
+            ctx.globalAlpha = alpha;       
+            
+            ctx.fillRect(50*i, 20, 40, 40);
+        }          
+    }
+</script>  
+<script>
+    var alpha = 1.0;
+    var ctx;
+    var canvas;
+    var img;
+
+    function init() {
+        canvas = document.getElementById('myCanvas');
+        ctx = canvas.getContext('2d');
+        
+        img = new Image();
+        img.src = 'mushrooms.jpg';
+        
+        img.onload = function() {
+            ctx.drawImage(img, 10, 10);
+      };
+      
+      fadeOut();
+    }
+    
+    function fadeOut() {
+        
+        if (alpha <= 0) {
+            return;
+        }         
+            
+        requestAnimationFrame(fadeOut);
+        ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.globalAlpha = alpha;
+            
+        ctx.drawImage(img, 10, 10);
+ 
+        alpha += -0.01;
+    }        
+</script>      
+</head>
+ 
+<body onload="draw();">
+ <canvas id="myCanvas" width="250" height="150">
+ </canvas>
+</body>
+</html>

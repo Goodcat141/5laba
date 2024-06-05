@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  canvas {
+    background: #000000;
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const numFlakes = 10000;
+  const flakes = [];
+
+  function Flake(x, y) {
+    const maxWeight = 2;
+    const maxSpeed = -10;
+    
+    this.x = x;
+    this.y = y;
+    this.r = Math.random() * maxWeight + 1;
+    this.d = Math.random() * maxSpeed + 2;
+  }
+
+  Flake.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.fillStyle = '#40E0D0';
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+    ctx.fill();
+  }
+
+  Flake.prototype.update = function() {
+    this.y += this.d;
+    
+    if (this.y > canvas.height) {
+      this.y = 0 - this.r;
+      this.x = Math.random() * canvas.width;
+    }
+  }
+
+  function createFlakes() {
+    for (let i = 0; i < numFlakes; i++) {
+      flakes.push(new Flake(Math.random() * canvas.width, Math.random() * canvas.height));
+    }
+  }
+
+  function drawFlakes() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < flakes.length; i++) {
+      flakes[i].draw();
+    }
+  }
+
+  function updateFlakes() {
+    for (let i = 0; i < flakes.length; i++) {
+      flakes[i].update();
+    }
+  }
+
+  function loop() {
+    drawFlakes();
+    updateFlakes();
+    requestAnimationFrame(loop);
+  }
+
+  createFlakes();
+  loop();
+</script>
+
+</body>
+</html>

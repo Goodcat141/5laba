@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 canvas rectangles</title>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(10, 10, 60, 60);
+        ctx.fillRect(100, 10, 100, 60);
+    }
+</script>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(10, 10, 60, 60);
+        ctx.fillRect(100, 10, 90, 60);
+        
+        ctx.beginPath();
+        ctx.arc(250, 40, 32, 0, 2*Math.PI);
+        ctx.fill(); 
+        
+        ctx.beginPath();
+        ctx.moveTo(10, 160);
+        ctx.lineTo(90, 160);
+        ctx.lineTo(50, 110);
+        ctx.closePath();
+        ctx.fill();         
+        
+        ctx.save();
+        ctx.scale(2, 1);
+        ctx.beginPath();
+        ctx.arc(72, 130, 25, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.restore();
+        
+        ctx.beginPath();
+        ctx.arc(250, 120, 40, 0, Math.PI);
+        ctx.fill();                 
+    }
+</script>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        var beginAngle = 0;
+        var endAngle = 0;
+        var data = [170, 60, 45]; 
+        var total = 0; 
+        var colours = ["#95B524", "#AFCC4C", "#C1DD54"];
+        const SPACE = 10;
+        
+        for (var i = 0; i < data.length; i++) {
+          total += data[i];
+        }
+
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        
+        for (var j = 0; j < data.length; j++) {
+            
+            endAngle = beginAngle + (Math.PI * 2 * (data[j] / total));
+            ctx.fillStyle = colours[j];
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2, canvas.height/2);
+            ctx.arc(canvas.width/2, canvas.height/2, canvas.height/2 - SPACE, 
+                beginAngle, endAngle, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            beginAngle = endAngle;
+        }               
+    }
+</script>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'gray';
+
+        var points = [ [ 0, 85 ], [ 75, 75 ], [ 100, 10 ], [ 125, 75 ], 
+            [ 200, 85 ], [ 150, 125 ], [ 160, 190 ], [ 100, 150 ], 
+            [ 40, 190 ], [ 50, 125 ], [ 0, 85 ] ];
+        
+        var len = points.length;
+
+        ctx.beginPath();
+        ctx.moveTo(points[0][0], points[0][1]);
+        
+        for (var i = 0; i < len; i++) {
+            ctx.lineTo(points[i][0], points[i][1]);
+        }        
+        
+        ctx.fill(); 
+
+    }
+</script>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        
+        ctx.lineWidth = 3;
+        
+        ctx.fillStyle = 'gray';
+        ctx.beginPath();
+        ctx.arc(90, 90, 60, 0, 2*Math.PI);
+        ctx.stroke();
+                
+        ctx.beginPath();
+        ctx.arc(120, 150, 60, 0, 2*Math.PI);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(150, 100, 60, 0, 2*Math.PI);
+        ctx.stroke();        
+
+        ctx.globalCompositeOperation='destination-out';
+
+        ctx.beginPath();
+        ctx.arc(90, 90, 60, 0, 2*Math.PI);
+        ctx.fill();
+                
+        ctx.beginPath();
+        ctx.arc(120, 150, 60, 0, 2*Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(150, 100, 60, 0, 2*Math.PI);
+        ctx.fill();
+    }
+</script>
+</head>
+
+<body onload="draw();">
+    <canvas id="myCanvas" width="400" height="350">
+    </canvas>
+</body>
+</html> 
+</head>
+
+<body onload="draw();">
+    <canvas id="myCanvas" width="350" height="250">
+    </canvas>
+</body>
+</html>

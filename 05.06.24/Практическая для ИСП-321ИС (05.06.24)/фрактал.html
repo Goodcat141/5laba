@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    text-align: center;
+    margin-top: 50px;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="kochCanvas" width="800" height="600"></canvas><br>
+<button onclick="increaseDepth()">Увеличить глубину рекурсии</button>
+
+<script>
+  const canvas = document.getElementById('kochCanvas');
+  const ctx = canvas.getContext('2d');
+  let depth = 0;
+
+  function drawKochCurve(startX, startY, endX, endY, depth) {
+    if (depth === 0) {
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+    } else {
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      const dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const unit = dist / 3;
+      const angle = Math.atan2(deltaY, deltaX);
+      const p1X = startX + deltaX / 3;
+      const p1Y = startY + deltaY / 3;
+      const p2X = p1X + Math.cos(angle - Math.PI / 3) * unit;
+      const p2Y = p1Y + Math.sin(angle - Math.PI / 3) * unit;
+      const p3X = startX + deltaX * 2 / 3;
+      const p3Y = startY + deltaY * 2 / 3;
+
+      drawKochCurve(startX, startY, p1X, p1Y, depth - 1);
+      drawKochCurve(p1X, p1Y, p2X, p2Y, depth - 1);
+      drawKochCurve(p2X, p2Y, p3X, p3Y, depth - 1);
+      drawKochCurve(p3X, p3Y, endX, endY, depth - 1);
+    }
+  }
+
+  function drawSnowflake() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const sideLength = 300;
+    const height = sideLength * Math.sqrt(3) / 2;
+    const startX = canvas.width / 2 - sideLength / 2;
+    const startY = canvas.height / 2 + height / 3;
+    const endX = startX + sideLength;
+    const endY = startY;
+    const topX = canvas.width / 2;
+    const topY = canvas.height / 2 - height / 3 * 2;
+
+    drawKochCurve(startX, startY, endX, endY, depth);
+    drawKochCurve(endX, endY, topX, topY, depth);
+    drawKochCurve(topX, topY, startX, startY, depth);
+  }
+
+  function increaseDepth() {
+    depth++;
+    drawSnowflake();
+  }
+
+  drawSnowflake();
+</script>
+
+</body>
+</html>

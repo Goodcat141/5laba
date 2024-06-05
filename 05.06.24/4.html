@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 canvas shadow</title> 
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'brown';
+        ctx.fillRect(10, 10, 90, 60);
+        
+        ctx.fillStyle = 'rgb(217, 146, 54)';
+        ctx.fillRect(130, 10, 90, 60);
+        
+        ctx.fillStyle = '#3F79BA';
+        ctx.fillRect(250, 10, 90, 60);        
+    }
+</script>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        
+        var lgr = ctx.createLinearGradient(150, 0, 150, 160);
+        lgr.addColorStop(0.2, "black");
+        lgr.addColorStop(0.5, "red");
+        lgr.addColorStop(0.8, "black");
+    
+        ctx.fillStyle = lgr;
+        ctx.fillRect(0, 0, 300, 160);
+    }
+</script>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+    
+        var rgr = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 5, 
+            canvas.width/2, canvas.height/2, 100);
+        rgr.addColorStop(0, "black");
+        rgr.addColorStop(0.3, "yellow");
+        rgr.addColorStop(1, "black");
+    
+        ctx.fillStyle = rgr;
+        ctx.fillRect(0, 0, 250, 250);
+    }
+</script>
+<script>
+    function draw() {
+        
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        var img = new Image();
+        img.src = 'crack.png';
+        
+        img.onload = function() {
+            var pattern = ctx.createPattern(img, 'repeat');
+
+            ctx.rect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = pattern;
+            ctx.fill();
+      };
+    }
+</script>
+</head>
+ 
+<body onload="draw();">
+ <canvas id="myCanvas" width="250" height="150">
+ </canvas>
+</body>
+</html>

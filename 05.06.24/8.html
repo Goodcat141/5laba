@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 canvas drawing text</title>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.font = "28px serif";
+        ctx.fillText("ZetCode", 15, 25);
+        
+        ctx.font = "36px sans-serif";
+        ctx.strokeText("ZetCode", 30, 80);
+    }      
+</script>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.font = "normal bold 18px serif";
+        ctx.fillText('nice', 10, 20); 
+        
+        ctx.font = "italic 18px serif";
+        ctx.fillText('pretty', 70, 20);
+        
+        ctx.font = "small-caps bolder 18px serif";
+        ctx.fillText('beautiful', 160, 20);  
+    }      
+</script>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+    
+        ctx.translate(0.5, 0.5);
+        ctx.setLineDash([2]);
+        
+        ctx.fillStyle = 'gray';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, 100);
+        ctx.lineTo(canvas.width, 100);
+        ctx.stroke();
+    
+        ctx.font = '20px serif';
+        ctx.textBaseline = "top";
+        ctx.fillText('Top', 5, 100); 
+        
+        ctx.textBaseline = "bottom"; 
+        ctx.fillText('Bottom', 60, 100); 
+        
+        ctx.textBaseline = "middle"; 
+        ctx.fillText('Middle', 150, 100); 
+        
+        ctx.textBaseline = "alphabetic"; 
+        ctx.fillText('Alphabetic', 240, 100); 
+        
+        ctx.textBaseline = "hanging"; 
+        ctx.fillText('Hanging', 360, 100); 
+        
+        ctx.textBaseline = "ideographic";
+        ctx.fillText('Ideographic', 460, 100);
+        
+    }    
+</script>
+<script>
+    function draw() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+    
+        var cw = canvas.width/2;
+    
+        ctx.fillStyle = 'gray';
+        ctx.translate(0.5, 0.5);
+        ctx.setLineDash([2]);
+        
+        ctx.beginPath();
+        ctx.moveTo(cw, 0);
+        ctx.lineTo(cw, canvas.height);
+        ctx.stroke();
+        
+        ctx.font = "16px serif";
+        
+        ctx.textAlign = "center";
+        ctx.fillText("center", cw, 20);
+        
+        ctx.textAlign = "start";
+        ctx.fillText("start", cw, 60);
+        
+        ctx.textAlign = "end";
+        ctx.fillText("end", cw, 100);
+        
+        ctx.textAlign = "left";
+        ctx.fillText("left", cw, 140);
+        
+        ctx.textAlign = "right";
+        ctx.fillText("right", cw, 180);
+    }    
+</script>
+</head>
+
+<body onload="draw();">
+    <canvas id="myCanvas" width="200" height="150">     
+    </canvas>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 canvas star field</title>
+<script>
+var canvas_w;
+var canvas_h;
+var canvas;
+var ctx;
+var layer1;
+var layer2;
+var layer3;
+
+const DELAY = 20;
+const N_STARS = 60;
+const SPEED1 = 3;
+const SPEED2 = 2;
+const SPEED3 = 1;
+
+function init() {
+    
+    canvas = document.getElementById("myCanvas");
+    ctx = canvas.getContext("2d");
+    
+    canvas_w = canvas.width;
+    canvas_h = canvas.height;
+
+    layer1 = new layer(N_STARS, SPEED1, "#ffffff");
+    layer2 = new layer(N_STARS, SPEED2, "#dddddd");
+    layer3 = new layer(N_STARS, SPEED3, "#999999");
+
+    setTimeout("drawLayers()", DELAY);
+}
+
+function star() {
+    
+    this.x = Math.floor(Math.random()*canvas_w);
+    this.y = Math.floor(Math.random()*canvas_h);
+    
+    this.move = function(speed) {
+        
+        this.y = this.y + speed;
+        
+        if (this.y > canvas_h) { 
+            
+            this.y = 0;
+            this.x = Math.floor(Math.random()*canvas_w);
+        }
+    }
+    
+    this.draw = function(col) {
+        
+        ctx.fillStyle = col;
+        ctx.fillRect(this.x, this.y , 1, 1);
+    }
+}
+
+function layer(n, sp, col) {
+    
+    this.n = n;
+    this.sp = sp;
+    this.col = col;
+    this.stars = new Array(this.n);
+    
+    for (var i=0; i < this.n; i++) {
+        this.stars[i] = new star();
+    }
+    
+    this.moveLayer = function() {
+        
+        for (var i=0; i < this.n; i++) {
+            this.stars[i].move(this.sp);
+        }
+    }
+    
+    this.drawLayer = function() {
+        
+        for (var i=0; i < this.n; i++) {
+            this.stars[i].draw(this.col);
+        }
+    }
+}
+
+function drawLayers() {
+
+    ctx.fillStyle = '#000000';      
+    ctx.fillRect(0, 0, canvas_w, canvas_h);
+    
+    layer1.moveLayer();
+    layer2.moveLayer();
+    layer3.moveLayer();
+    
+    layer1.drawLayer();
+    layer2.drawLayer();
+    layer3.drawLayer();
+    
+    setTimeout("drawLayers()", DELAY);
+}
+
+</script>
+</head>
+
+<body onload="init();">
+    <canvas id="myCanvas" width="800" height="600">
+    </canvas>
+</body>
+</html> 
